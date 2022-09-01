@@ -1,12 +1,11 @@
 from email.policy import default
 import json
 from fastapi import FastAPI, Header, Response, status, Depends
-from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
-from typing import List
 from . import models
 from .database import engine, SessionLocal
 from sqlalchemy.orm import Session
+from .schemas import User, Service
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -18,8 +17,6 @@ def get_db():
         yield db
     finally:
         db.close()
-
-
 
 origins = [
     'http://localhost:3000'
@@ -35,17 +32,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-class Service(BaseModel):
-    firstName: str
-    lastName: str
-    email: str
-    services: List[str]
+
 
 @app.post("/service", status_code=status.HTTP_201_CREATED)
-async def add_service(service: Service, db: Session = Depends(get_db)):
-    try:
-        print((service))
-    except ValueError as error:
-        print(error)
-    # print(type(service))
+async def add_service(user: User, service: Service, db: Session = Depends(get_db)):
+    print(user)
+    print(service)
+    # db_service = models.User(**user.dict())
+    # db.add(db_service)
+    # db.commit()
+    # db.refresh()
     return Response(status_code=status.HTTP_201_CREATED)
