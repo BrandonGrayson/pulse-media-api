@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Optional
 
 class User(BaseModel):
     firstName: str
@@ -6,6 +7,6 @@ class User(BaseModel):
     email: str
 
 class Service(BaseModel):
-    google: bool
-    web_development: bool
-    social_media: bool
+    google: Optional[bool]
+    web_development: Optional[bool]
+    social_media: Optional[bool]
