@@ -7,6 +7,6 @@ class User(BaseModel):
     email: str
 
 class Service(BaseModel):
-    google: Optional[bool]
-    web_development: Optional[bool]
-    social_media: Optional[bool]
+    google: Optional[bool] = False
+    web_development: Optional[bool] = False
+    social_media: Optional[bool] = False

@@ -32,8 +32,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-
 @app.post("/service", status_code=status.HTTP_201_CREATED)
 async def add_service(user: User, service: Service, db: Session = Depends(get_db)):
     print(user)
