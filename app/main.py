@@ -33,11 +33,13 @@ app.add_middleware(
 )
 
 @app.post("/service", status_code=status.HTTP_201_CREATED)
-async def add_service(user: User, service: Service, db: Session = Depends(get_db)):
+async def add_service(user: User, services: Service, db: Session = Depends(get_db)):
     print(user)
-    print(service)
-    # db_service = models.User(**user.dict())
-    # db.add(db_service)
-    # db.commit()
+    print(services)
+    db_user = models.User(**user.dict())
+    db_service = models.Service(**services.dict())
+    db.add(db_user)
+    db.add(db_service)
+    db.commit()
     # db.refresh()
     return Response(status_code=status.HTTP_201_CREATED)
